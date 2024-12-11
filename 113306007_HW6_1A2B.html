@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>HW6</title>
+
+</head>
+
+<body>
+   
+  <h1>113306007_HW6_1A2B</h1>
+
+  <input type="text" id="guessInput" placeholder="Enter 4 digits">
+  <button onclick="checkGuess()">Guess!</button>
+
+  <h3>♤Game Records♠</h3>
+
+  <p id="feedback"></p>
+  <p id="attempts"></p>
+
+  <script>
+    
+    function getRandomNumber() {
+      let answer = [];
+      let pool = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+      
+      for (let i = 0; i < 4; i++) {
+        let index = Math.floor(Math.random() * pool.length);
+        answer.push(pool[index]);
+        pool.splice(index, 1); 
+      }
+
+      return answer;
+    }
+
+
+    let answer = getRandomNumber();
+    let attempts = 0;
+
+   
+    function checkGuess() {
+      const input = document.getElementById("guessInput").value;
+
+      if (!/^\d{4}$/.test(input)) {
+        alert("Please enter exactly 4 digits.");
+        document.getElementById("guessInput").value = "";
+        return;
+      }
+
+      
+      if (new Set(input).size != 4) {
+        alert("Digits must not repeat. Please try again.");
+        document.getElementById("guessInput").value = "";
+        return;
+      }
+
+      attempts++;
+      
+      let guess = input.split("");
+      let a = 0;
+      let b = 0;
+
+      for (let i = 0; i < 4; i++) {
+        if (guess[i] == answer[i]) {
+          a++;
+        } else if (answer.includes(guess[i])) {
+          b++;
+        }
+      }
+
+      document.getElementById("feedback").innerText += "Attempt " + attempts + ": " + input + " ➩ " + a + "A" + b + "B\n";
+
+      if (a == 4) {
+        alert("Congratulations! You guessed the number in " + attempts + " attempts.");
+
+      }
+         document.getElementById("guessInput").value = "";
+    }
+
+  </script>
+</body>
+</html>
